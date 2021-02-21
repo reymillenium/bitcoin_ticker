@@ -13,6 +13,15 @@ class _PriceScreenState extends State<PriceScreen> {
   // String dropdownValue = 'One';
   String selectedCurrency = currenciesList[0];
 
+  List<DropdownMenuItem<String>> getDropDownItems() {
+    return currenciesList.map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,12 +74,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 });
               },
               // items: <String>['One', 'Two', 'Free', 'Four'].map<DropdownMenuItem<String>>((String value) {
-              items: currenciesList.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+              items: getDropDownItems(),
             ),
           ),
         ],
