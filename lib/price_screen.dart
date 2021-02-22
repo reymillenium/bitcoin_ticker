@@ -1,5 +1,6 @@
 // Packages:
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 //Components:
 import 'coin_data.dart';
@@ -12,6 +13,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   // String dropdownValue = 'One';
   String selectedCurrency = currenciesList[0];
+  int selectedCurrencyIndex = 0;
 
   List<DropdownMenuItem<String>> getDropDownItems() {
     return currenciesList.map<DropdownMenuItem<String>>((String value) {
@@ -19,6 +21,12 @@ class _PriceScreenState extends State<PriceScreen> {
         value: value,
         child: Text(value),
       );
+    }).toList();
+  }
+
+  List<Text> getCupertinoPickerChildren() {
+    return currenciesList.map<Text>((String value) {
+      return Text(value);
     }).toList();
   }
 
@@ -58,24 +66,37 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: DropdownButton<String>(
-              value: selectedCurrency,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              style: TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (String newValue) {
+            child: CupertinoPicker(
+              backgroundColor: Colors.lightBlue,
+              itemExtent: 32.0,
+              onSelectedItemChanged: (selectedIndex) {
                 setState(() {
-                  selectedCurrency = newValue;
+                  selectedCurrencyIndex = selectedIndex;
                 });
+                print(selectedIndex);
               },
-              // items: <String>['One', 'Two', 'Free', 'Four'].map<DropdownMenuItem<String>>((String value) {
-              items: getDropDownItems(),
+              children: getCupertinoPickerChildren(),
             ),
+
+            // child: DropdownButton<String>(
+            //   value: selectedCurrency,
+            //   icon: Icon(Icons.arrow_downward),
+            //   iconSize: 24,
+            //   elevation: 16,
+            //   style: TextStyle(
+            //       // color: Colors.deepPurple,
+            //       ),
+            //   underline: Container(
+            //     height: 2,
+            //     color: Colors.deepPurpleAccent,
+            //   ),
+            //   onChanged: (String newValue) {
+            //     setState(() {
+            //       selectedCurrency = newValue;
+            //     });
+            //   },
+            //   items: getDropDownItems(),
+            // ),
           ),
         ],
       ),
