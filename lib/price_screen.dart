@@ -17,6 +17,13 @@ class _PriceScreenState extends State<PriceScreen> {
   int selectedCurrencyIndex = 0;
 
   DropdownButton getDropDownButton() {
+    List<DropdownMenuItem<String>> dropDownItems = currenciesList.map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
+
     return DropdownButton<String>(
       value: selectedCurrency,
       icon: Icon(Icons.arrow_downward),
@@ -27,27 +34,22 @@ class _PriceScreenState extends State<PriceScreen> {
           ),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        // color: Colors.deepPurpleAccent,
       ),
       onChanged: (String newValue) {
         setState(() {
           selectedCurrency = newValue;
         });
       },
-      items: getDropDownItems(),
+      items: dropDownItems,
     );
   }
 
-  List<DropdownMenuItem<String>> getDropDownItems() {
-    return currenciesList.map<DropdownMenuItem<String>>((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      );
-    }).toList();
-  }
-
   CupertinoPicker getCupertinoPicker() {
+    List<Text> cupertinoPickerChildren = currenciesList.map<Text>((String value) {
+      return Text(value);
+    }).toList();
+
     return CupertinoPicker(
       backgroundColor: Colors.lightBlue,
       itemExtent: 32.0,
@@ -57,7 +59,7 @@ class _PriceScreenState extends State<PriceScreen> {
         });
         print(selectedIndex);
       },
-      children: getCupertinoPickerChildren(),
+      children: cupertinoPickerChildren,
     );
   }
 
@@ -69,12 +71,6 @@ class _PriceScreenState extends State<PriceScreen> {
     } else {
       return getDropDownButton();
     }
-  }
-
-  List<Text> getCupertinoPickerChildren() {
-    return currenciesList.map<Text>((String value) {
-      return Text(value);
-    }).toList();
   }
 
   @override
