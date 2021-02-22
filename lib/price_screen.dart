@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
 //Components:
-import 'coin_data.dart';
+import 'package:bitcoin_ticker/components/drop_down_button_currency.dart';
+
+// Utilities:
+import 'utilities/coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -63,13 +66,30 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
+  // Widget getSelectBoxByPlatform() {
+  //   bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+  //
+  //   if (isIOS) {
+  //     return getCupertinoPicker();
+  //   } else {
+  //     return getDropDownButton();
+  //   }
+  // }
+
   Widget getSelectBoxByPlatform() {
     bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     if (isIOS) {
       return getCupertinoPicker();
     } else {
-      return getDropDownButton();
+      return DropDownButtonCurrency(
+        selectedCurrency: selectedCurrency,
+        onChanged: (String newValue) {
+          setState(() {
+            selectedCurrency = newValue;
+          });
+        },
+      );
     }
   }
 
