@@ -46,6 +46,20 @@ class _PriceScreenState extends State<PriceScreen> {
     }).toList();
   }
 
+  Widget getCupertinoPicker() {
+    return CupertinoPicker(
+      backgroundColor: Colors.lightBlue,
+      itemExtent: 32.0,
+      onSelectedItemChanged: (selectedIndex) {
+        setState(() {
+          selectedCurrencyIndex = selectedIndex;
+        });
+        print(selectedIndex);
+      },
+      children: getCupertinoPickerChildren(),
+    );
+  }
+
   List<Text> getCupertinoPickerChildren() {
     return currenciesList.map<Text>((String value) {
       return Text(value);
@@ -88,37 +102,7 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: CupertinoPicker(
-              backgroundColor: Colors.lightBlue,
-              itemExtent: 32.0,
-              onSelectedItemChanged: (selectedIndex) {
-                setState(() {
-                  selectedCurrencyIndex = selectedIndex;
-                });
-                print(selectedIndex);
-              },
-              children: getCupertinoPickerChildren(),
-            ),
-
-            // child: DropdownButton<String>(
-            //   value: selectedCurrency,
-            //   icon: Icon(Icons.arrow_downward),
-            //   iconSize: 24,
-            //   elevation: 16,
-            //   style: TextStyle(
-            //       // color: Colors.deepPurple,
-            //       ),
-            //   underline: Container(
-            //     height: 2,
-            //     color: Colors.deepPurpleAccent,
-            //   ),
-            //   onChanged: (String newValue) {
-            //     setState(() {
-            //       selectedCurrency = newValue;
-            //     });
-            //   },
-            //   items: getDropDownItems(),
-            // ),
+            child: getCupertinoPicker(),
           ),
         ],
       ),
