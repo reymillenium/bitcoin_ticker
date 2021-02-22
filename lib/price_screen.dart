@@ -1,6 +1,7 @@
 // Packages:
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 //Components:
 import 'coin_data.dart';
@@ -15,7 +16,7 @@ class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = currenciesList[0];
   int selectedCurrencyIndex = 0;
 
-  Widget getDropDownButton() {
+  DropdownButton getDropDownButton() {
     return DropdownButton<String>(
       value: selectedCurrency,
       icon: Icon(Icons.arrow_downward),
@@ -46,7 +47,7 @@ class _PriceScreenState extends State<PriceScreen> {
     }).toList();
   }
 
-  Widget getCupertinoPicker() {
+  CupertinoPicker getCupertinoPicker() {
     return CupertinoPicker(
       backgroundColor: Colors.lightBlue,
       itemExtent: 32.0,
@@ -58,6 +59,16 @@ class _PriceScreenState extends State<PriceScreen> {
       },
       children: getCupertinoPickerChildren(),
     );
+  }
+
+  Widget getSelectBoxByPlatform() {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
+    if (isIOS) {
+      return getCupertinoPicker();
+    } else {
+      return getDropDownButton();
+    }
   }
 
   List<Text> getCupertinoPickerChildren() {
@@ -102,7 +113,7 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: getCupertinoPicker(),
+            child: getSelectBoxByPlatform(),
           ),
         ],
       ),
