@@ -15,6 +15,28 @@ class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = currenciesList[0];
   int selectedCurrencyIndex = 0;
 
+  Widget getDropDownButton() {
+    return DropdownButton<String>(
+      value: selectedCurrency,
+      icon: Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: TextStyle(
+          // color: Colors.deepPurple,
+          ),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          selectedCurrency = newValue;
+        });
+      },
+      items: getDropDownItems(),
+    );
+  }
+
   List<DropdownMenuItem<String>> getDropDownItems() {
     return currenciesList.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
