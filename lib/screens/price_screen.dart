@@ -1,4 +1,5 @@
 // Packages:
+import 'package:bitcoin_ticker/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
@@ -8,17 +9,44 @@ import 'package:bitcoin_ticker/components/drop_down_button_currency.dart';
 import 'package:bitcoin_ticker/components/cupertino_picker_currency.dart';
 import 'package:bitcoin_ticker/components/multi_platform_select_box.dart';
 
+// Services:
+import 'package:bitcoin_ticker/services/networking.dart';
+
 // Utilities:
-import 'utilities/coin_data.dart';
+import '../utilities/coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
+  // Properties:
+  final coinApiExchangeRateData;
+
+  // Constructor:
+  PriceScreen({
+    this.coinApiExchangeRateData,
+  });
+
   @override
   _PriceScreenState createState() => _PriceScreenState();
 }
 
 class _PriceScreenState extends State<PriceScreen> {
+  NetworkHelper networkHelper = NetworkHelper();
+
+  // Properties:
   String selectedCurrencyValue = currenciesList[0];
   int selectedCurrencyIndex = 0;
+
+  // From Coin API Exchange Data:
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    updateUI(widget.coinApiExchangeRateData);
+  }
+
+  void updateUI(dynamic coinApiExchangeRateData) {
+    print(coinApiExchangeRateData);
+  }
 
   @override
   Widget build(BuildContext context) {

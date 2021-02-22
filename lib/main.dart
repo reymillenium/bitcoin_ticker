@@ -1,5 +1,6 @@
+import 'package:bitcoin_ticker/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
-import 'price_screen.dart';
+import 'screens/price_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,11 +11,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Clima',
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.lightBlue,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: PriceScreen(),
+      home: LoadingScreen(
+        title: 'Bitcoin Ticker',
+      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
