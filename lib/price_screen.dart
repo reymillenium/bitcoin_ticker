@@ -1,11 +1,12 @@
 // Packages:
-import 'package:bitcoin_ticker/components/cupertino_picker_currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
 //Components:
 import 'package:bitcoin_ticker/components/drop_down_button_currency.dart';
+import 'package:bitcoin_ticker/components/cupertino_picker_currency.dart';
+import 'package:bitcoin_ticker/components/multi_platform_select_box.dart';
 
 // Utilities:
 import 'utilities/coin_data.dart';
@@ -18,88 +19,6 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrencyValue = currenciesList[0];
   int selectedCurrencyIndex = 0;
-
-  // DropdownButton getDropDownButton() {
-  //   List<DropdownMenuItem<String>> dropDownItems = currenciesList.map<DropdownMenuItem<String>>((String value) {
-  //     return DropdownMenuItem<String>(
-  //       value: value,
-  //       child: Text(value),
-  //     );
-  //   }).toList();
-  //
-  //   return DropdownButton<String>(
-  //     value: selectedCurrencyValue,
-  //     icon: Icon(Icons.arrow_downward),
-  //     iconSize: 24,
-  //     elevation: 16,
-  //     style: TextStyle(
-  //         // color: Colors.deepPurple,
-  //         ),
-  //     underline: Container(
-  //       height: 2,
-  //       // color: Colors.deepPurpleAccent,
-  //     ),
-  //     onChanged: (String newValue) {
-  //       setState(() {
-  //         selectedCurrencyValue = newValue;
-  //       });
-  //     },
-  //     items: dropDownItems,
-  //   );
-  // }
-
-  // CupertinoPicker getCupertinoPicker() {
-  //   List<Text> cupertinoPickerChildren = currenciesList.map<Text>((String value) {
-  //     return Text(value);
-  //   }).toList();
-  //
-  //   return CupertinoPicker(
-  //     backgroundColor: Colors.lightBlue,
-  //     itemExtent: 32.0,
-  //     onSelectedItemChanged: (selectedIndex) {
-  //       setState(() {
-  //         selectedCurrencyIndex = selectedIndex;
-  //         selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
-  //       });
-  //       print(selectedIndex);
-  //     },
-  //     children: cupertinoPickerChildren,
-  //   );
-  // }
-
-  // Widget getSelectBoxByPlatform() {
-  //   bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-  //
-  //   if (isIOS) {
-  //     return getCupertinoPicker();
-  //   } else {
-  //     return getDropDownButton();
-  //   }
-  // }
-
-  Widget getSelectBoxByPlatform() {
-    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-
-    if (isIOS) {
-      return CupertinoPickerCurrency(
-        onSelectedItemChanged: (selectedIndex) {
-          setState(() {
-            selectedCurrencyIndex = selectedIndex;
-            selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
-          });
-        },
-      );
-    } else {
-      return DropDownButtonCurrency(
-        selectedCurrencyValue: selectedCurrencyValue,
-        onChanged: (String newValue) {
-          setState(() {
-            selectedCurrencyValue = newValue;
-          });
-        },
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +56,20 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: getSelectBoxByPlatform(),
+            child: MultiPlatformSelectBox(
+              selectedCurrencyValue: selectedCurrencyValue,
+              onSelectedItemChanged: (selectedIndex) {
+                setState(() {
+                  selectedCurrencyIndex = selectedIndex;
+                  selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+                });
+              },
+              onChanged: (String newValue) {
+                setState(() {
+                  selectedCurrencyValue = newValue;
+                });
+              },
+            ),
           ),
         ],
       ),

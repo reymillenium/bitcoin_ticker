@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-//Components:
+// Utilities:
 import 'package:bitcoin_ticker/utilities/coin_data.dart';
 
 class CupertinoPickerCurrency extends StatelessWidget {
