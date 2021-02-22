@@ -57,14 +57,14 @@ class _PriceScreenState extends State<PriceScreen> {
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
             child: MultiPlatformSelectBox(
-              selectedCurrencyValue: selectedCurrencyValue,
-              onSelectedItemChanged: (selectedIndex) {
+              onSelectedItemChangedIOS: (selectedIndex) {
                 setState(() {
                   selectedCurrencyIndex = selectedIndex;
                   selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
                 });
               },
-              onChanged: (String newValue) {
+              selectedCurrencyValueAndroid: selectedCurrencyValue,
+              onChangedAndroid: (String newValue) {
                 setState(() {
                   selectedCurrencyValue = newValue;
                 });

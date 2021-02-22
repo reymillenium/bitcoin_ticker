@@ -10,11 +10,11 @@ import 'package:bitcoin_ticker/components/cupertino_picker_currency.dart';
 import 'package:bitcoin_ticker/utilities/coin_data.dart';
 
 class MultiPlatformSelectBox extends StatelessWidget {
-  final Function onSelectedItemChanged;
-  final String selectedCurrencyValue;
-  final Function onChanged;
+  final Function onSelectedItemChangedIOS;
+  final String selectedCurrencyValueAndroid;
+  final Function onChangedAndroid;
 
-  MultiPlatformSelectBox({this.selectedCurrencyValue, this.onSelectedItemChanged, this.onChanged});
+  MultiPlatformSelectBox({this.onSelectedItemChangedIOS, this.selectedCurrencyValueAndroid, this.onChangedAndroid});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ class MultiPlatformSelectBox extends StatelessWidget {
     if (isIOS) {
       return CupertinoPickerCurrency(
         onSelectedItemChanged: (selectedIndex) {
-          onSelectedItemChanged(selectedIndex);
+          onSelectedItemChangedIOS(selectedIndex);
         },
       );
     } else {
       return DropDownButtonCurrency(
-        selectedCurrencyValue: selectedCurrencyValue,
+        selectedCurrencyValue: selectedCurrencyValueAndroid,
         onChanged: (String newValue) {
-          onChanged(newValue);
+          onChangedAndroid(newValue);
         },
       );
     }
