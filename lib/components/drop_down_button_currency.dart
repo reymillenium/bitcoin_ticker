@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:bitcoin_ticker/utilities/coin_data.dart';
 
 class DropDownButtonCurrency extends StatelessWidget {
-  final String selectedCurrency;
+  final String selectedCurrencyValue;
   final Function onChanged;
 
-  DropDownButtonCurrency({this.selectedCurrency, this.onChanged});
+  DropDownButtonCurrency({this.selectedCurrencyValue, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class DropDownButtonCurrency extends StatelessWidget {
     }).toList();
 
     return DropdownButton<String>(
-      value: selectedCurrency,
+      value: selectedCurrencyValue,
       icon: Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,

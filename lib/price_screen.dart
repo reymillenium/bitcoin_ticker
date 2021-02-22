@@ -1,4 +1,5 @@
 // Packages:
+import 'package:bitcoin_ticker/components/cupertino_picker_currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
@@ -15,56 +16,56 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  // String dropdownValue = 'One';
-  String selectedCurrency = currenciesList[0];
+  String selectedCurrencyValue = currenciesList[0];
   int selectedCurrencyIndex = 0;
 
-  DropdownButton getDropDownButton() {
-    List<DropdownMenuItem<String>> dropDownItems = currenciesList.map<DropdownMenuItem<String>>((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      );
-    }).toList();
+  // DropdownButton getDropDownButton() {
+  //   List<DropdownMenuItem<String>> dropDownItems = currenciesList.map<DropdownMenuItem<String>>((String value) {
+  //     return DropdownMenuItem<String>(
+  //       value: value,
+  //       child: Text(value),
+  //     );
+  //   }).toList();
+  //
+  //   return DropdownButton<String>(
+  //     value: selectedCurrencyValue,
+  //     icon: Icon(Icons.arrow_downward),
+  //     iconSize: 24,
+  //     elevation: 16,
+  //     style: TextStyle(
+  //         // color: Colors.deepPurple,
+  //         ),
+  //     underline: Container(
+  //       height: 2,
+  //       // color: Colors.deepPurpleAccent,
+  //     ),
+  //     onChanged: (String newValue) {
+  //       setState(() {
+  //         selectedCurrencyValue = newValue;
+  //       });
+  //     },
+  //     items: dropDownItems,
+  //   );
+  // }
 
-    return DropdownButton<String>(
-      value: selectedCurrency,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(
-          // color: Colors.deepPurple,
-          ),
-      underline: Container(
-        height: 2,
-        // color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          selectedCurrency = newValue;
-        });
-      },
-      items: dropDownItems,
-    );
-  }
-
-  CupertinoPicker getCupertinoPicker() {
-    List<Text> cupertinoPickerChildren = currenciesList.map<Text>((String value) {
-      return Text(value);
-    }).toList();
-
-    return CupertinoPicker(
-      backgroundColor: Colors.lightBlue,
-      itemExtent: 32.0,
-      onSelectedItemChanged: (selectedIndex) {
-        setState(() {
-          selectedCurrencyIndex = selectedIndex;
-        });
-        print(selectedIndex);
-      },
-      children: cupertinoPickerChildren,
-    );
-  }
+  // CupertinoPicker getCupertinoPicker() {
+  //   List<Text> cupertinoPickerChildren = currenciesList.map<Text>((String value) {
+  //     return Text(value);
+  //   }).toList();
+  //
+  //   return CupertinoPicker(
+  //     backgroundColor: Colors.lightBlue,
+  //     itemExtent: 32.0,
+  //     onSelectedItemChanged: (selectedIndex) {
+  //       setState(() {
+  //         selectedCurrencyIndex = selectedIndex;
+  //         selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+  //       });
+  //       print(selectedIndex);
+  //     },
+  //     children: cupertinoPickerChildren,
+  //   );
+  // }
 
   // Widget getSelectBoxByPlatform() {
   //   bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
@@ -80,13 +81,20 @@ class _PriceScreenState extends State<PriceScreen> {
     bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     if (isIOS) {
-      return getCupertinoPicker();
+      return CupertinoPickerCurrency(
+        onSelectedItemChanged: (selectedIndex) {
+          setState(() {
+            selectedCurrencyIndex = selectedIndex;
+            selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+          });
+        },
+      );
     } else {
       return DropDownButtonCurrency(
-        selectedCurrency: selectedCurrency,
+        selectedCurrencyValue: selectedCurrencyValue,
         onChanged: (String newValue) {
           setState(() {
-            selectedCurrency = newValue;
+            selectedCurrencyValue = newValue;
           });
         },
       );
