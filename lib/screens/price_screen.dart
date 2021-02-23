@@ -84,19 +84,46 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: MultiPlatformSelectBox(
-              onSelectedItemChangedIOS: (selectedIndex) {
-                setState(() {
-                  selectedCurrencyIndex = selectedIndex;
-                  selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
-                });
-              },
-              selectedCurrencyValueAndroid: selectedCurrencyValue,
-              onChangedAndroid: (String newValue) {
-                setState(() {
-                  selectedCurrencyValue = newValue;
-                });
-              },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Flexible(
+                  child: Container(
+                    child: MultiPlatformSelectBox(
+                      onSelectedItemChangedIOS: (selectedIndex) {
+                        setState(() {
+                          selectedCurrencyIndex = selectedIndex;
+                          selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+                        });
+                      },
+                      selectedCurrencyValueAndroid: selectedCurrencyValue,
+                      onChangedAndroid: (String newValue) {
+                        setState(() {
+                          selectedCurrencyValue = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                    child: MultiPlatformSelectBox(
+                      onSelectedItemChangedIOS: (selectedIndex) {
+                        setState(() {
+                          selectedCurrencyIndex = selectedIndex;
+                          selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+                        });
+                      },
+                      selectedCurrencyValueAndroid: selectedCurrencyValue,
+                      onChangedAndroid: (String newValue) {
+                        setState(() {
+                          selectedCurrencyValue = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -17,6 +17,7 @@ class CupertinoPickerCurrency extends StatelessWidget {
     }).toList();
 
     return CupertinoPicker(
+      // useMagnifier: false,
       backgroundColor: Colors.lightBlue,
       itemExtent: 32.0,
       onSelectedItemChanged: (selectedIndex) {

@@ -12,6 +12,9 @@ import 'package:bitcoin_ticker/components/transition_spinner.dart';
 // Services:
 import 'package:bitcoin_ticker/services/routes.dart';
 
+// Utilities:
+import 'package:bitcoin_ticker/utilities/coin_data.dart';
+
 class LoadingScreen extends StatefulWidget {
   LoadingScreen({Key key, this.title}) : super(key: key);
 
@@ -25,7 +28,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    getExchangeRateData(assetIdBase: 'BTC', assetIdQuote: 'USD');
+    getExchangeRateData(assetIdBase: cryptoList[0], assetIdQuote: currenciesList[0]);
   }
 
   void getExchangeRateData({String assetIdBase, String assetIdQuote}) async {
@@ -42,8 +45,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
-      child: TransitionSpinner(),
-    ));
+          child: TransitionSpinner(),
+        ));
   }
 }
