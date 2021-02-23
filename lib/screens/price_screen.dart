@@ -2,6 +2,7 @@
 import 'package:bitcoin_ticker/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:deep_pick/deep_pick.dart';
 import 'dart:io' show Platform;
 
 //Components:
@@ -32,12 +33,15 @@ class _PriceScreenState extends State<PriceScreen> {
   NetworkHelper networkHelper = NetworkHelper();
 
   // Properties:
-  String selectedCurrencyValueAssetBase = cryptoList[0];
+  String selectedCryptoValueAssetBase = cryptoList[0];
   int selectedCurrencyIndexAssetBase = 0;
   String selectedCurrencyValueAssetQuote = currenciesList[0];
   int selectedCurrencyIndexAssetQuote = 0;
+  double cryptoAmount = 1;
+  double currencyAmount = 1;
 
   // From Coin API Exchange Data:
+  double rate = 0;
 
   @override
   void initState() {
@@ -48,6 +52,9 @@ class _PriceScreenState extends State<PriceScreen> {
 
   void updateUI(dynamic coinApiExchangeRateData) {
     print(coinApiExchangeRateData);
+    rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
+    // print(rate);
+    currencyAmount = cryptoAmount * rate;
   }
 
   @override
@@ -71,7 +78,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 $selectedCurrencyValueAssetBase = ? $selectedCurrencyValueAssetQuote',
+                  '1 $selectedCryptoValueAssetBase = $currencyAmount $selectedCurrencyValueAssetQuote',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -92,17 +99,21 @@ class _PriceScreenState extends State<PriceScreen> {
                 Flexible(
                   child: Container(
                     child: MultiPlatformSelectBox(
-                      onSelectedItemChangedIOS: (selectedIndex) {
+                      onSelectedItemChangedIOS: (selectedIndex) async {
                         setState(() {
                           selectedCurrencyIndexAssetBase = selectedIndex;
-                          selectedCurrencyValueAssetBase = cryptoList[selectedCurrencyIndexAssetBase];
+                          selectedCryptoValueAssetBase = cryptoList[selectedCurrencyIndexAssetBase];
                         });
+                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
+                        updateUI(exchangeRateData);
                       },
-                      selectedCurrencyValueAndroid: selectedCurrencyValueAssetBase,
-                      onChangedAndroid: (String newValue) {
+                      selectedCurrencyValueAndroid: selectedCryptoValueAssetBase,
+                      onChangedAndroid: (String newValue) async {
                         setState(() {
-                          selectedCurrencyValueAssetBase = newValue;
+                          selectedCryptoValueAssetBase = newValue;
                         });
+                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
+                        updateUI(exchangeRateData);
                       },
                       itemsList: cryptoList,
                     ),
@@ -111,17 +122,21 @@ class _PriceScreenState extends State<PriceScreen> {
                 Flexible(
                   child: Container(
                     child: MultiPlatformSelectBox(
-                      onSelectedItemChangedIOS: (selectedIndex) {
+                      onSelectedItemChangedIOS: (selectedIndex) async {
                         setState(() {
                           selectedCurrencyIndexAssetQuote = selectedIndex;
                           selectedCurrencyValueAssetQuote = currenciesList[selectedCurrencyIndexAssetQuote];
                         });
+                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
+                        updateUI(exchangeRateData);
                       },
                       selectedCurrencyValueAndroid: selectedCurrencyValueAssetQuote,
-                      onChangedAndroid: (String newValue) {
+                      onChangedAndroid: (String newValue) async {
                         setState(() {
                           selectedCurrencyValueAssetQuote = newValue;
                         });
+                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
+                        updateUI(exchangeRateData);
                       },
                       itemsList: currenciesList,
                     ),
