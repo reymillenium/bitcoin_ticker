@@ -54,7 +54,13 @@ class _PriceScreenState extends State<PriceScreen> {
     print(coinApiExchangeRateData);
     rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
     // print(rate);
-    currencyAmount = cryptoAmount * rate;
+    currencyAmount = double.parse((cryptoAmount * rate).toStringAsFixed(2));
+  }
+
+  void getExchangeRateData() async {
+    var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
+    // print(exchangeRateData);
+    updateUI(exchangeRateData);
   }
 
   @override
@@ -104,16 +110,14 @@ class _PriceScreenState extends State<PriceScreen> {
                           selectedCurrencyIndexAssetBase = selectedIndex;
                           selectedCryptoValueAssetBase = cryptoList[selectedCurrencyIndexAssetBase];
                         });
-                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
-                        updateUI(exchangeRateData);
+                        getExchangeRateData();
                       },
                       selectedCurrencyValueAndroid: selectedCryptoValueAssetBase,
                       onChangedAndroid: (String newValue) async {
                         setState(() {
                           selectedCryptoValueAssetBase = newValue;
                         });
-                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
-                        updateUI(exchangeRateData);
+                        getExchangeRateData();
                       },
                       itemsList: cryptoList,
                     ),
@@ -127,16 +131,14 @@ class _PriceScreenState extends State<PriceScreen> {
                           selectedCurrencyIndexAssetQuote = selectedIndex;
                           selectedCurrencyValueAssetQuote = currenciesList[selectedCurrencyIndexAssetQuote];
                         });
-                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
-                        updateUI(exchangeRateData);
+                        getExchangeRateData();
                       },
                       selectedCurrencyValueAndroid: selectedCurrencyValueAssetQuote,
                       onChangedAndroid: (String newValue) async {
                         setState(() {
                           selectedCurrencyValueAssetQuote = newValue;
                         });
-                        var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
-                        updateUI(exchangeRateData);
+                        getExchangeRateData();
                       },
                       itemsList: currenciesList,
                     ),
