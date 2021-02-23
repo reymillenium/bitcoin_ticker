@@ -34,7 +34,6 @@ class DropDownButtonCurrency extends StatelessWidget {
       ),
       onChanged: (String newValue) {
         onChanged(newValue);
-        print(newValue);
       },
       items: dropDownItems,
     );

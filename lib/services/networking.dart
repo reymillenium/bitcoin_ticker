@@ -10,7 +10,7 @@ class NetworkHelper {
 
   Future getExchangeRateData({String assetIdBase, String assetIdQuote}) async {
     String exchangeRateURL = '$coinApiExchangeRateURL/$assetIdBase/$assetIdQuote?apikey=$freeCoinApiKey';
-    print(exchangeRateURL);
+    // print(exchangeRateURL);
     return await _getData(url: exchangeRateURL);
   }
 

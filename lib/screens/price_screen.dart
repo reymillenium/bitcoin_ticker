@@ -3,6 +3,8 @@ import 'package:bitcoin_ticker/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:deep_pick/deep_pick.dart';
+import 'dart:async'; // Allows to use the Timer
+
 import 'dart:io' show Platform;
 
 //Components:
@@ -39,28 +41,49 @@ class _PriceScreenState extends State<PriceScreen> {
   int selectedCurrencyIndexAssetQuote = 0;
   double cryptoAmount = 1;
   double currencyAmount = 1;
+  Timer searchOnStoppedTypingCrypto;
+  Timer searchOnStoppedTypingCurrency;
 
   // From Coin API Exchange Data:
   double rate = 0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     updateUI(widget.coinApiExchangeRateData);
   }
 
   void updateUI(dynamic coinApiExchangeRateData) {
-    print(coinApiExchangeRateData);
+    // print('coinApiExchangeRateData: $coinApiExchangeRateData');
     rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
-    // print(rate);
+    // print('rate: $rate');
     currencyAmount = double.parse((cryptoAmount * rate).toStringAsFixed(2));
+    // print('currencyAmount: $currencyAmount');
   }
 
   void getExchangeRateData() async {
     var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
-    // print(exchangeRateData);
     updateUI(exchangeRateData);
+  }
+
+  _onChangeCryptoHandler() {
+    const duration = Duration(milliseconds: 500); // set the duration that you want call search() after that.
+    if (searchOnStoppedTypingCrypto != null) {
+      setState(() => searchOnStoppedTypingCrypto.cancel()); // clear timer
+    }
+    setState(() => searchOnStoppedTypingCrypto = new Timer(duration, () {
+          getExchangeRateData();
+        }));
+  }
+
+  _onChangeCurrencyHandler() {
+    const duration = Duration(milliseconds: 500); // set the duration that you want call search() after that.
+    if (searchOnStoppedTypingCurrency != null) {
+      setState(() => searchOnStoppedTypingCurrency.cancel()); // clear timer
+    }
+    setState(() => searchOnStoppedTypingCurrency = new Timer(duration, () {
+          getExchangeRateData();
+        }));
   }
 
   @override
@@ -101,7 +124,9 @@ class _PriceScreenState extends State<PriceScreen> {
             color: Colors.lightBlue,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // Crypto Select Box
                 Flexible(
                   child: Container(
                     child: MultiPlatformSelectBox(
@@ -110,19 +135,21 @@ class _PriceScreenState extends State<PriceScreen> {
                           selectedCurrencyIndexAssetBase = selectedIndex;
                           selectedCryptoValueAssetBase = cryptoList[selectedCurrencyIndexAssetBase];
                         });
-                        getExchangeRateData();
+                        _onChangeCryptoHandler();
                       },
                       selectedCurrencyValueAndroid: selectedCryptoValueAssetBase,
                       onChangedAndroid: (String newValue) async {
                         setState(() {
                           selectedCryptoValueAssetBase = newValue;
                         });
-                        getExchangeRateData();
+                        _onChangeCryptoHandler();
                       },
                       itemsList: cryptoList,
                     ),
                   ),
                 ),
+
+                // Currency Select Box
                 Flexible(
                   child: Container(
                     child: MultiPlatformSelectBox(
@@ -131,14 +158,14 @@ class _PriceScreenState extends State<PriceScreen> {
                           selectedCurrencyIndexAssetQuote = selectedIndex;
                           selectedCurrencyValueAssetQuote = currenciesList[selectedCurrencyIndexAssetQuote];
                         });
-                        getExchangeRateData();
+                        _onChangeCurrencyHandler();
                       },
                       selectedCurrencyValueAndroid: selectedCurrencyValueAssetQuote,
                       onChangedAndroid: (String newValue) async {
                         setState(() {
                           selectedCurrencyValueAssetQuote = newValue;
                         });
-                        getExchangeRateData();
+                        _onChangeCurrencyHandler();
                       },
                       itemsList: currenciesList,
                     ),
