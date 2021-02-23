@@ -7,12 +7,13 @@ import 'package:bitcoin_ticker/utilities/coin_data.dart';
 class DropDownButtonCurrency extends StatelessWidget {
   final String selectedCurrencyValue;
   final Function onChanged;
+  final List<String> itemsList;
 
-  DropDownButtonCurrency({this.selectedCurrencyValue, this.onChanged});
+  DropDownButtonCurrency({this.selectedCurrencyValue, this.onChanged, this.itemsList});
 
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuItem<String>> dropDownItems = currenciesList.map<DropdownMenuItem<String>>((String value) {
+    List<DropdownMenuItem<String>> dropDownItems = itemsList.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(value),

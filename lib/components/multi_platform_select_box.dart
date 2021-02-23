@@ -13,8 +13,9 @@ class MultiPlatformSelectBox extends StatelessWidget {
   final Function onSelectedItemChangedIOS;
   final String selectedCurrencyValueAndroid;
   final Function onChangedAndroid;
+  final List<dynamic> itemsList;
 
-  MultiPlatformSelectBox({this.onSelectedItemChangedIOS, this.selectedCurrencyValueAndroid, this.onChangedAndroid});
+  MultiPlatformSelectBox({this.onSelectedItemChangedIOS, this.selectedCurrencyValueAndroid, this.onChangedAndroid, this.itemsList});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class MultiPlatformSelectBox extends StatelessWidget {
         onSelectedItemChanged: (selectedIndex) {
           onSelectedItemChangedIOS(selectedIndex);
         },
+        itemsList: itemsList,
       );
     } else {
       return DropDownButtonCurrency(
@@ -32,6 +34,7 @@ class MultiPlatformSelectBox extends StatelessWidget {
         onChanged: (String newValue) {
           onChangedAndroid(newValue);
         },
+        itemsList: itemsList,
       );
     }
   }

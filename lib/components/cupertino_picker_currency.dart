@@ -7,12 +7,13 @@ import 'package:bitcoin_ticker/utilities/coin_data.dart';
 
 class CupertinoPickerCurrency extends StatelessWidget {
   final Function onSelectedItemChanged;
+  final List<String> itemsList;
 
-  CupertinoPickerCurrency({this.onSelectedItemChanged});
+  CupertinoPickerCurrency({this.onSelectedItemChanged, this.itemsList});
 
   @override
   Widget build(BuildContext context) {
-    List<Text> cupertinoPickerChildren = currenciesList.map<Text>((String value) {
+    List<Text> cupertinoPickerChildren = itemsList.map<Text>((String value) {
       return Text(value);
     }).toList();
 

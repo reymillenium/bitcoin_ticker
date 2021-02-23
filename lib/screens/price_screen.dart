@@ -32,8 +32,10 @@ class _PriceScreenState extends State<PriceScreen> {
   NetworkHelper networkHelper = NetworkHelper();
 
   // Properties:
-  String selectedCurrencyValue = currenciesList[0];
-  int selectedCurrencyIndex = 0;
+  String selectedCurrencyValueAssetBase = cryptoList[0];
+  int selectedCurrencyIndexAssetBase = 0;
+  String selectedCurrencyValueAssetQuote = currenciesList[0];
+  int selectedCurrencyIndexAssetQuote = 0;
 
   // From Coin API Exchange Data:
 
@@ -92,16 +94,17 @@ class _PriceScreenState extends State<PriceScreen> {
                     child: MultiPlatformSelectBox(
                       onSelectedItemChangedIOS: (selectedIndex) {
                         setState(() {
-                          selectedCurrencyIndex = selectedIndex;
-                          selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+                          selectedCurrencyIndexAssetBase = selectedIndex;
+                          selectedCurrencyValueAssetBase = currenciesList[selectedCurrencyIndexAssetBase];
                         });
                       },
-                      selectedCurrencyValueAndroid: selectedCurrencyValue,
+                      selectedCurrencyValueAndroid: selectedCurrencyValueAssetBase,
                       onChangedAndroid: (String newValue) {
                         setState(() {
-                          selectedCurrencyValue = newValue;
+                          selectedCurrencyValueAssetBase = newValue;
                         });
                       },
+                      itemsList: cryptoList,
                     ),
                   ),
                 ),
@@ -110,16 +113,17 @@ class _PriceScreenState extends State<PriceScreen> {
                     child: MultiPlatformSelectBox(
                       onSelectedItemChangedIOS: (selectedIndex) {
                         setState(() {
-                          selectedCurrencyIndex = selectedIndex;
-                          selectedCurrencyValue = currenciesList[selectedCurrencyIndex];
+                          selectedCurrencyIndexAssetQuote = selectedIndex;
+                          selectedCurrencyValueAssetQuote = currenciesList[selectedCurrencyIndexAssetQuote];
                         });
                       },
-                      selectedCurrencyValueAndroid: selectedCurrencyValue,
+                      selectedCurrencyValueAndroid: selectedCurrencyValueAssetQuote,
                       onChangedAndroid: (String newValue) {
                         setState(() {
-                          selectedCurrencyValue = newValue;
+                          selectedCurrencyValueAssetQuote = newValue;
                         });
                       },
+                      itemsList: currenciesList,
                     ),
                   ),
                 ),
