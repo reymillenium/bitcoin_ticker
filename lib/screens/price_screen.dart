@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:deep_pick/deep_pick.dart';
 import 'dart:async'; // Allows to use the Timer
-import 'package:intl/intl.dart';
+import 'package:flutter/services.dart'; // Allows to use inputFormatters in TextField components
 
 import 'dart:io' show Platform;
 
 //Components:
-import 'package:bitcoin_ticker/components/drop_down_button_currency.dart';
-import 'package:bitcoin_ticker/components/cupertino_picker_currency.dart';
 import 'package:bitcoin_ticker/components/multi_platform_select_box.dart';
 
 // Services:
@@ -143,6 +141,8 @@ class _PriceScreenState extends State<PriceScreen> {
           Container(
             padding: EdgeInsets.all(20.0),
             child: TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
               autofocus: true,
               style: kTextFieldInputStyle,
               decoration: kTextFieldDecoration,

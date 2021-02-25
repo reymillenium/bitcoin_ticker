@@ -1,6 +1,6 @@
 // Packages:
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart'; // To use FormatNumber
 
 const coinApiExchangeRateURL = 'https://rest.coinapi.io/v1/exchangerate';
 
