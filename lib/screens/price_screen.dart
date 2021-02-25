@@ -40,10 +40,11 @@ class _PriceScreenState extends State<PriceScreen> {
   int selectedCurrencyIndexAssetBase = 0;
   String selectedCurrencyValueAssetQuote = currenciesList[0];
   int selectedCurrencyIndexAssetQuote = 0;
-  double cryptoAmount = 1;
+  double cryptoAmount = 1 ?? 0;
   double currencyAmount = 1;
   Timer searchOnStoppedTypingCrypto;
   Timer searchOnStoppedTypingCurrency;
+  Timer searchOnStoppedTypingAmount;
 
   // From Coin API Exchange Data:
   double rate = 0;
@@ -86,6 +87,22 @@ class _PriceScreenState extends State<PriceScreen> {
         }));
   }
 
+  _onChangeAmountHandler(value) {
+    const duration = Duration(milliseconds: 500); // set the duration that you want call search() after that.
+    if (searchOnStoppedTypingAmount != null) {
+      setState(() => searchOnStoppedTypingAmount.cancel()); // clear timer
+    }
+    setState(() => searchOnStoppedTypingAmount = new Timer(duration, () {
+          setState(() {
+            print(value);
+            String valueToParse = (value == null || value == '') ? '0.0' : value;
+            print(valueToParse);
+            cryptoAmount = double.parse(valueToParse);
+          });
+          getExchangeRateData();
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +125,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
                   // '1 $selectedCryptoValueAssetBase = $currencyAmount $selectedCurrencyValueAssetQuote',
-                  '1 $selectedCryptoValueAssetBase = ${currencyFormat.format(currencyAmount)} $selectedCurrencyValueAssetQuote',
+                  '$cryptoAmount $selectedCryptoValueAssetBase = ${currencyFormat.format(currencyAmount)} $selectedCurrencyValueAssetQuote',
                   // '1 $selectedCryptoValueAssetBase = ${currencyFormat.format(132323.4343)} $selectedCurrencyValueAssetQuote',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -117,6 +134,23 @@ class _PriceScreenState extends State<PriceScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(20.0),
+            child: TextField(
+              autofocus: true,
+              style: kTextFieldInputStyle,
+              decoration: kTextFieldDecoration,
+              cursorColor: Colors.black,
+              cursorWidth: 2,
+              onChanged: (value) {
+                _onChangeAmountHandler(value);
+              },
+              onSubmitted: (value) async {
+                await Future.delayed(const Duration(milliseconds: 500));
+                _onChangeAmountHandler(value);
+              },
             ),
           ),
           Container(
