@@ -54,11 +54,8 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void updateUI(dynamic coinApiExchangeRateData) {
-    // print('coinApiExchangeRateData: $coinApiExchangeRateData');
     rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
-    // print('rate: $rate');
     currencyAmount = double.parse((cryptoAmount * rate).toStringAsFixed(2));
-    // print('currencyAmount: $currencyAmount');
   }
 
   void getExchangeRateData() async {

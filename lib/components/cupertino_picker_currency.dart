@@ -23,7 +23,6 @@ class CupertinoPickerCurrency extends StatelessWidget {
       itemExtent: 32.0,
       onSelectedItemChanged: (selectedIndex) {
         onSelectedItemChanged(selectedIndex);
-        print(selectedIndex);
       },
       children: cupertinoPickerChildren,
     );
