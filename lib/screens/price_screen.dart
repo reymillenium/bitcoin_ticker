@@ -34,6 +34,7 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   NetworkHelper networkHelper = NetworkHelper();
+  TextEditingController _controller;
 
   // Properties:
   String selectedCryptoValueAssetBase = cryptoList[0];
@@ -52,6 +53,7 @@ class _PriceScreenState extends State<PriceScreen> {
   @override
   void initState() {
     super.initState();
+    _controller = new TextEditingController(text: '1');
     updateUI(widget.coinApiExchangeRateData);
   }
 
@@ -136,6 +138,8 @@ class _PriceScreenState extends State<PriceScreen> {
               ),
             ),
           ),
+
+          // Crypto Amount Text Field
           Container(
             padding: EdgeInsets.all(20.0),
             child: TextField(
@@ -151,8 +155,11 @@ class _PriceScreenState extends State<PriceScreen> {
                 await Future.delayed(const Duration(milliseconds: 500));
                 _onChangeAmountHandler(value);
               },
+              controller: _controller,
             ),
           ),
+
+          // Crypto & Currency Selectors
           Container(
             height: 150.0,
             alignment: Alignment.center,
