@@ -141,8 +141,15 @@ class _PriceScreenState extends State<PriceScreen> {
           Container(
             padding: EdgeInsets.all(20.0),
             child: TextField(
+              // Only numbers, but does not accepts the dot (not enough)
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+
+              // Accepts numbers, commas and more than one dot (not good)
+              // keyboardType: TextInputType.numberWithOptions(decimal: true),
+              // inputFormatters: [
+              //   FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              // ],
               autofocus: true,
               style: kTextFieldInputStyle,
               decoration: kTextFieldDecoration,
