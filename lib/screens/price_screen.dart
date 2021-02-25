@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:deep_pick/deep_pick.dart';
 import 'dart:async'; // Allows to use the Timer
+import 'package:intl/intl.dart';
 
 import 'dart:io' show Platform;
 
@@ -16,7 +17,7 @@ import 'package:bitcoin_ticker/components/multi_platform_select_box.dart';
 import 'package:bitcoin_ticker/services/networking.dart';
 
 // Utilities:
-import '../utilities/coin_data.dart';
+import 'package:bitcoin_ticker/utilities/coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
   // Properties:
@@ -54,8 +55,10 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void updateUI(dynamic coinApiExchangeRateData) {
-    rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
-    currencyAmount = double.parse((cryptoAmount * rate).toStringAsFixed(2));
+    setState(() {
+      rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
+      currencyAmount = double.parse((cryptoAmount * rate).toStringAsFixed(2));
+    });
   }
 
   void getExchangeRateData() async {
@@ -104,7 +107,9 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 $selectedCryptoValueAssetBase = $currencyAmount $selectedCurrencyValueAssetQuote',
+                  // '1 $selectedCryptoValueAssetBase = $currencyAmount $selectedCurrencyValueAssetQuote',
+                  '1 $selectedCryptoValueAssetBase = ${currencyFormat.format(currencyAmount)} $selectedCurrencyValueAssetQuote',
+                  // '1 $selectedCryptoValueAssetBase = ${currencyFormat.format(132323.4343)} $selectedCurrencyValueAssetQuote',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
