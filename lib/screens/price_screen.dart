@@ -94,7 +94,6 @@ class _PriceScreenState extends State<PriceScreen> {
     }
     setState(() => searchOnStoppedTypingAmount = new Timer(duration, () {
           setState(() {
-            print(value);
             String valueToParse = (value == null || value == '') ? '0.0' : value;
             print(valueToParse);
             cryptoAmount = double.parse(valueToParse);
