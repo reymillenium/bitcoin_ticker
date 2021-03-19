@@ -7,9 +7,10 @@ import 'package:bitcoin_ticker/utilities/constants.dart';
 
 class NetworkHelper {
   // Gets the exchange rate data
-  Future getExchangeRateData({String assetIdBase, String assetIdQuote}) async {
-    String exchangeRateURL = '$coinApiExchangeRateURL/$assetIdBase/$assetIdQuote?apikey=$freeCoinApiKey';
-    return await _getData(url: exchangeRateURL);
+  Future getSpecificExchangeRateData({String assetIdBase, String assetIdQuote}) async {
+    String specificExchangeRateURL = '$coinApiExchangeRateURL/$assetIdBase/$assetIdQuote?apikey=$freeCoinApiKey';
+    print(specificExchangeRateURL);
+    return await _getData(url: specificExchangeRateURL);
   }
 
   // Gets the data given a url:

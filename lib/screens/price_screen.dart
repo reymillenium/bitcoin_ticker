@@ -19,11 +19,11 @@ import 'package:bitcoin_ticker/utilities/coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
   // Properties:
-  final coinApiExchangeRateData;
+  final coinApiSpecificExchangeRateData;
 
   // Constructor:
   PriceScreen({
-    this.coinApiExchangeRateData,
+    this.coinApiSpecificExchangeRateData,
   });
 
   @override
@@ -52,19 +52,19 @@ class _PriceScreenState extends State<PriceScreen> {
   void initState() {
     super.initState();
     _controller = new TextEditingController(text: '1');
-    updateUI(widget.coinApiExchangeRateData);
+    updateUI(widget.coinApiSpecificExchangeRateData);
   }
 
-  void updateUI(dynamic coinApiExchangeRateData) {
+  void updateUI(dynamic coinApiSpecificExchangeRateData) {
     setState(() {
-      rate = pick(coinApiExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
+      rate = pick(coinApiSpecificExchangeRateData, 'rate').asDoubleOrNull() ?? 0;
       currencyAmount = double.parse((cryptoAmount * rate).toStringAsFixed(2));
     });
   }
 
-  void getExchangeRateData() async {
-    var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
-    updateUI(exchangeRateData);
+  void getSpecificExchangeRateData() async {
+    var specificExchangeRateData = await NetworkHelper().getSpecificExchangeRateData(assetIdBase: selectedCryptoValueAssetBase, assetIdQuote: selectedCurrencyValueAssetQuote);
+    updateUI(specificExchangeRateData);
   }
 
   _onChangeCryptoHandler() {
@@ -73,7 +73,7 @@ class _PriceScreenState extends State<PriceScreen> {
       setState(() => searchOnStoppedTypingCrypto.cancel()); // clear timer
     }
     setState(() => searchOnStoppedTypingCrypto = new Timer(duration, () {
-          getExchangeRateData();
+          getSpecificExchangeRateData();
         }));
   }
 
@@ -83,7 +83,7 @@ class _PriceScreenState extends State<PriceScreen> {
       setState(() => searchOnStoppedTypingCurrency.cancel()); // clear timer
     }
     setState(() => searchOnStoppedTypingCurrency = new Timer(duration, () {
-          getExchangeRateData();
+          getSpecificExchangeRateData();
         }));
   }
 
@@ -97,7 +97,7 @@ class _PriceScreenState extends State<PriceScreen> {
             String valueToParse = (value == null || value == '') ? '0.0' : value;
             cryptoAmount = double.parse(valueToParse);
           });
-          getExchangeRateData();
+          getSpecificExchangeRateData();
         }));
   }
 

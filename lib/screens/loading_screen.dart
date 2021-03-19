@@ -28,17 +28,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    getExchangeRateData(assetIdBase: cryptoList[0], assetIdQuote: currenciesList[0]);
+    getSpecificExchangeRateData(assetIdBase: cryptoList[0], assetIdQuote: currenciesList[0]);
   }
 
-  void getExchangeRateData({String assetIdBase, String assetIdQuote}) async {
-    var exchangeRateData = await NetworkHelper().getExchangeRateData(assetIdBase: assetIdBase, assetIdQuote: assetIdQuote);
-    // print(exchangeRateData);
+  void getSpecificExchangeRateData({String assetIdBase, String assetIdQuote}) async {
+    var specificExchangeRateData = await NetworkHelper().getSpecificExchangeRateData(assetIdBase: assetIdBase, assetIdQuote: assetIdQuote);
+    // print(specificExchangeRateData);
     // await Future.delayed(const Duration(milliseconds: 500));
     RoutesHelper routesHelper = RoutesHelper();
     Navigator.of(context).push(routesHelper.createRoute(
         destiny: PriceScreen(
-      coinApiExchangeRateData: exchangeRateData,
+      coinApiSpecificExchangeRateData: specificExchangeRateData,
     )));
   }
 
