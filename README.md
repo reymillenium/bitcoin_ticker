@@ -1,12 +1,29 @@
 ![Rey Millenium Banner](https://github.com/reymillenium/images/blob/master/reymillenium_banner_800x200.png)
 
-# Bitcoin Ticker ₿
+# Bitcoin Ticker <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" width="48" />
 
 This is a Bitcoin Ticker app. It is a multi screen app with a simple functionality but full-on custom styling.
 
+
+## Extra Dependencies
+
+- http: ^0.12.2
+- flutter_spinkit: "^4.1.2"
+- deep_pick: ^0.6.0
+- rflutter_alert: ^1.1.0
+- intl: ^0.16.1
+  
+  
 ## Screen Shots
 
-### Home page
+### Loading Screen
+![Loading screen](https://github.com/reymillenium/images/blob/master/my_projects/16_BitCoinTicker/loading_screen.png)
+
+### Price Screen
+![Loading screen](https://github.com/reymillenium/images/blob/master/my_projects/16_BitCoinTicker/price_screen1.png)
+
+![Loading screen](https://github.com/reymillenium/images/blob/master/my_projects/16_BitCoinTicker/price_screen2.png)
+
 
 ***
 ## Contact
