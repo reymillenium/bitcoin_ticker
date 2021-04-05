@@ -4,8 +4,7 @@
 
 This is a Bitcoin Ticker app. It is a multi screen app with a simple functionality but full-on custom styling.
 
-It uses the data stored on the [REST API Free Coin](https://github.com/reymillenium/rest-api-freecoin) which stores and retrieves each hour the exchange rates data from the [Coin API](https://www.coinapi.io/) in order to be used later for another web and mobile apps.  
-This is a low cost solution in order to surpass the 100 direct accesses limit on the [Coin API](https://www.coinapi.io/) (free tier).
+It uses the data stored on the [REST API Free Coin](https://github.com/reymillenium/rest-api-freecoin) which stores and retrieves each hour the exchange rates data from the [Coin API](https://www.coinapi.io/) in order to be used later for another web and mobile apps. This is a low cost solution in order to surpass the 100 direct accesses limit on the [Coin API](https://www.coinapi.io/) (free tier).
 
 ## Extra Dependencies
 
